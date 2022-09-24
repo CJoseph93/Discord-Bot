@@ -17,29 +17,11 @@ async def on_message(message):
 		whatevs, command, name, change = test.split(" ")
 		await client.change_nickname(serv.get_member_named(name), change)
 	elif message.content == '!corby rock':
-		x = random.randint(1,3)
-		if x == 1:
-			await client.send_message(message.channel, content='Bot chose rock: Tie')
-		elif x == 2:
-			await client.send_message(message.channel, content='Bot chose paper: You Lose')
-		elif x == 3:
-			await client.send_message(message.channel, content='Bot chose scissors: You Win')
+		RPS(1)
 	elif message.content == '!corby paper':
-		x = random.randint(1,3)
-		if x == 1:
-			await client.send_message(message.channel, content='Bot chose rock: You Win')
-		elif x == 2:
-			await client.send_message(message.channel, content='Bot chose paper: Tie')
-		elif x == 3:
-			await client.send_message(message.channel, content='Bot chose scissors: You Lose')
+		RPS(2)
 	elif message.content == '!corby scissors':
-		x = random.randint(1,3)
-		if x == 1:
-			await client.send_message(message.channel, content='Bot chose rock: You Lose')
-		elif x == 2:
-			await client.send_message(message.channel, content='Bot chose paper: You Win')
-		elif x == 3:
-			await client.send_message(message.channel, content='Bot chose scissors: Tie')
+		RPS(3)
 	elif message.content.startswith('!corby tts'):
 		test = message.content
 		author = message.author
@@ -63,25 +45,9 @@ async def on_message(message):
 	#	player.start()
 		
 def gameChoose():
-		x = random.randint(1, 9)
-		if x == 1:
-			return "PUBG"
-		elif x == 2:
-			return "Counter Strike"
-		elif x == 3:
-			return "Overwatch"
-		elif x == 4:
-			return "Golf with friends"
-		elif x == 5:
-			return "Hand Simulator"
-		elif x == 6:
-			return "GTA V"
-		elif x == 7:
-			return "Garrys mod"
-		elif x == 8:
-			return "Civilization V"
-		elif x == 9:
-			return "Warframe"
+		gamelist = ["PUBG","Counter Strike","Overwatch","Golf with friends","Hand Simulator","GTA V","Garry's mod","Civilization V","Warframe"]
+		x = random.randint(1, len(gamelist))
+		return gamelist[x]
 			
 def addMeme(memeToAdd):
 	global memecount
@@ -97,6 +63,16 @@ def generateMeme():
 		return memes[x - 1]
 	else:
 		return 'no memes available'
+			
+def RPS(playerSection):
+	botChoice = random.randint(1,3)
+	resultmessage = "You tie!"
+	result = playerSection - botChoice
+	if result == -2 or (result > 0 and result != 2):
+		resultmessage = "You win!"
+	elif result < 0 or result == 2:
+		resultmessage = "you lose"
+	await client.send_message(message.channel, content=result)
 			
 def helpContent():
 	x = 'Try these commands:\n'
